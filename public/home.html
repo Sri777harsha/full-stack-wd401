@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *
+        {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        .container
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        h1
+        {
+            text-align: center;
+        }
+        textarea, .output
+        {
+            width: 200px;
+            height: 200px;
+            margin: 15px;
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        .boxes
+        {
+            display:flex;
+        }
+        .translate{
+            border: 2px solid black;
+            border-radius: 15px;
+            margin: 15px;
+            padding: 15px;
+        }
+        body{
+            background: linear-gradient(pink,red, white,lightblue,skyblue,violet,red);
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+        .output
+        {
+            background-color: rgb(184, 132, 198);
+            color: brown;
+            font-size:20px ;
+        }
+        .container
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        textarea
+        {
+            background-color: rgb(162, 220, 155);
+            color: rgb(39, 10, 155);
+            font-size: 20px;
+        }
+        button
+        {
+            background-color: violet;
+            text-align: center;
+            justify-content: center;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <h1>Translator</h1>
+    <div class="container">
+        <div class="translate">
+            <div class="boxes">
+                <textarea name="input" id="input"class="box1" placeholder="Enter your text"></textarea>
+                <div class="output" id="output">Your transcryption appears here</div>
+        </div>
+        <select id="languageSelect">
+            <option value="">Select Language</option>
+          </select>
+        <button id="translate">Translate</button>
+        </div>
+        <div class="todolist"></div>
+    </div>
+    <script>
+        
+       const indianLanguages = {
+        "Assamese": "as",
+        "Bengali": "bn",
+        "Bodo": "brx",
+        "Dogri": "doi",
+        "Gujarati": "gu",
+        "Hindi": "hi",
+        "Kannada": "kn",
+        "Kashmiri": "ks",
+        "Konkani": "kok",
+        "Maithili": "mai",
+        "Malayalam": "ml",
+        "Manipuri": "mni",
+        "Marathi": "mr",
+        "Nepali": "ne",
+        "Odia": "or",
+        "Punjabi": "pa",
+        "Sanskrit": "sa",
+        "Santali": "sat",
+        "Sindhi": "sd",
+        "Tamil": "ta",
+        "Telugu": "te",
+        "Urdu": "ur"
+      };
+      const translate=document.getElementById('translate');
+      // Populate the language dropdown list
+      for (const lang in indianLanguages) {
+        if (indianLanguages.hasOwnProperty(lang)) {
+          const option = document.createElement('option');
+          option.value = indianLanguages[lang];
+          option.textContent = lang;
+          languageSelect.appendChild(option);
+        }
+      }
+      translate.addEventListener('click',()=>
+      {
+        const input_text=document.getElementById('input');
+       const language =document.getElementById('languageSelect');
+       const output_text=document.getElementById('output');
+       console.log(input_text.value);
+       console.log(language.value);
+       let apiurl=`https://api.mymemory.translated.net/get?q=${input_text.value}&langpair=en|${language.value}`;
+       fetch(apiurl).then(res=>res.json()).then(data=>
+       {
+        output_text.innerHTML=data.responseData.translatedText;
+        console.log(body);
+       })
+      });
+       
+    </script>
+</body>
+</html>
